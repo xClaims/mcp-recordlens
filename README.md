@@ -21,7 +21,7 @@ RecordLens runs locally as a stdio server. It reads files and Windows Event Logs
 With Python, PowerShell, and the Codex CLI available, run from the checkout:
 
 ```powershell
-.\Deploy-RecordLens.ps1
+.\Deploy-RecordLens.ps1 -Client Codex
 ```
 
 The installer registers RecordLens in the current user's Codex configuration, so it is available throughout the VS Code workspace and other local projects using the same Codex host. Restart the extension and call `get_server_health`.
@@ -32,7 +32,15 @@ WinEvent queries require Windows PowerShell and access to the selected log. Read
 
 ## Use with GitHub Copilot in VS Code
 
-Run `.\Deploy-RecordLens.ps1 -InstallOnly` if RecordLens is not already installed. An existing Codex installation of RecordLens can be reused.
+On a Copilot-only host, run:
+
+```powershell
+.\Deploy-RecordLens.ps1 -Client Copilot
+```
+
+This installs and tests RecordLens, then registers it for all local workspaces in the current user's Copilot Global configuration. It backs up an existing configuration before updating the RecordLens entry. The default `-Client Auto` selects Codex when its CLI is on PATH and Copilot otherwise. Use `-InstallOnly` to skip client registration.
+
+For manual registration, an existing RecordLens installation can be reused.
 
 In a Copilot chat session, run **Chat: Open Customizations**, select **MCP Servers**, and add a **Command (stdio)** server named `recordlens` under **Global → Copilot Global**. Use the absolute path to `recordlens.exe`. The default installer puts it at `%LOCALAPPDATA%\RecordLens\1.1.0\Scripts\recordlens.exe`. Expand the environment variable before entering the path.
 

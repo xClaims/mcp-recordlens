@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-recordlens"
+version = "1.1.0"
+requires-python = ">=3.11"
+description = "Inspect structured records, Windows event logs and policy backups"
+readme = "README.md"
+dependencies = ["mcp>=1.12,<2", "lxml>=5,<7", "python-evtx>=0.8,<1"]
+
+[project.scripts]
+recordlens = "mcp_recordlens.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

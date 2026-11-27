@@ -26,6 +26,30 @@ To install without modifying client configuration, run `python -m pip install .`
 
 WinEvent queries require Windows PowerShell and access to the selected log. Reads run with your Windows identity. The export tool is disabled until you configure `RECORDLENS_EXPORT_DIR` as an existing local directory in the server environment.
 
+## Use with GitHub Copilot in VS Code
+
+Run `.\Deploy-RecordLens.ps1 -InstallOnly` if RecordLens is not already installed. An existing Codex installation of RecordLens can be reused.
+
+In a Copilot chat session, run **Chat: Open Customizations**, select **MCP Servers**, and add a **Command (stdio)** server named `recordlens` under **Global → Copilot Global**. Use the absolute path to `recordlens.exe`. The default installer puts it at `%LOCALAPPDATA%\RecordLens\1.1.0\Scripts\recordlens.exe`. Expand the environment variable before entering the path.
+
+You can also merge the following entry into the `mcpServers` object in `$COPILOT_HOME/mcp-config.json` (default `~/.copilot/mcp-config.json`). Replace the example path with the actual executable path.
+
+```json
+{
+  "mcpServers": {
+    "recordlens": {
+      "type": "stdio",
+      "command": "C:/Users/your-user/AppData/Local/RecordLens/1.1.0/Scripts/recordlens.exe",
+      "args": [],
+      "tools": ["*"]
+    }
+  }
+}
+```
+
+In Copilot Chat, ask RecordLens to run `get_server_health` and confirm the reported version and tool count. See the [VS Code MCP configuration reference](https://code.visualstudio.com/docs/agents/reference/mcp-configuration).
+
+
 ## Development
 
 Run `python -m pip install .`, then `python -m unittest discover -s tests`.

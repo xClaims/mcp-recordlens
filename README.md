@@ -12,6 +12,10 @@ RecordLens is a local stdio MCP server for inspecting structured files, Windows 
 
 Supported formats include JSON, CSV, TSV, text, logs, XML, CMTX, INF, Registry.pol, and EVTX. Start with `summarize_folder` for large data sets. Check `complete`, `errors`, and `limit_reasons` before drawing conclusions from results.
 
+## Data access
+
+RecordLens runs locally as a stdio server. It reads files and Windows Event Logs with the permissions of the account running it. Results are returned to the MCP client, which can include them in model context. Use files and logs you are authorized to share with that client.
+
 ## Install for Codex in VS Code
 
 With Python, PowerShell, and the Codex CLI available, run from the checkout:

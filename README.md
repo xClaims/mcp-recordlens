@@ -50,6 +50,31 @@ You can also merge the following entry into the `mcpServers` object in `$COPILOT
 In Copilot Chat, ask RecordLens to run `get_server_health` and confirm the reported version and tool count. See the [VS Code MCP configuration reference](https://code.visualstudio.com/docs/agents/reference/mcp-configuration).
 
 
+## Check RecordLens and inventory a folder
+
+In Codex or Copilot Chat, ask:
+
+> Call RecordLens `get_server_health` and report its status and version.
+
+A successful response with `status: healthy` confirms the server is responding in that session.
+
+To list files without reading their records, ask:
+
+> Use RecordLens `inventory_folder` on `C:\path\to\folder` with `max_depth=2` and `max_files=25`. Show the total file count, counts by file type, and whether there is another page.
+
+The MCP tool is `inventory_folder`, exposed as `mcp__recordlens__inventory_folder` in Codex. Example arguments:
+
+```json
+{
+  "path": "C:\\path\\to\\folder",
+  "max_depth": 2,
+  "max_files": 25,
+  "offset": 0
+}
+```
+
+`max_depth` defaults to `0` (top-level files only). Set `supported_only` to `false` to include other file types. `max_files` limits the entries returned per page. If `next_offset` is non-null, pass it as `offset` on the next call with the same path and filters. `file_count` and `file_types` describe the full matching scope.
+
 ## Development
 
 Run `python -m pip install .`, then `python -m unittest discover -s tests`.
